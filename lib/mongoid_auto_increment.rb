@@ -9,7 +9,7 @@ module MongoidAutoIncrement
       seq_name = "#{self.name.downcase}_#{name}"
       @@incrementor = MongoidAutoIncrement::Incrementor.new unless defined? @@incrementor
 
-      after_initialize { self.send("#{name}=", @@incrementor.inc(seq_name, options)) }
+      before_create { self.send("#{name}=", @@incrementor.inc(seq_name, options)) }
     end
   end
 end
